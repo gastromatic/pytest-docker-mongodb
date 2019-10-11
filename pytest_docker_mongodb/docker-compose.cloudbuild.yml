@@ -1,0 +1,12 @@
+version: "3"
+services:
+  db:
+    image: "mongo:4.0"
+    expose:
+      - "27017"
+    networks:
+      - "ci"
+networks:
+  ci:
+    external:
+      name: cloudbuild
