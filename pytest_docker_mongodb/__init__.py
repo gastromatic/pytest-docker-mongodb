@@ -60,4 +60,4 @@ def db(in_docker_compose, docker_services):
     client = motor.AsyncIOMotorClient(url)
     # yield a test database
     yield client['test']
-    client.drop_database()
+    client.drop_database('test')
