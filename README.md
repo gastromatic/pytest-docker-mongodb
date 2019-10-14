@@ -9,8 +9,8 @@ for mongodb.
 
 ```
 @pytest.fixture
-def db_with_schema(db):
-    fill_database(db)
+def db_with_schema(db_mongodb):
+    fill_database(db_mongodb)
     return db
 ```
 

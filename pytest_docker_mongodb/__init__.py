@@ -3,9 +3,6 @@ import os
 
 import pytest
 import motor.motor_asyncio as motor
-#from sqlalchemy import create_engine
-#from sqlalchemy.engine.url import URL
-#from sqlalchemy_utils.functions import create_database, drop_database
 
 
 # We can either be on the host or in the docker-compose network
@@ -45,7 +42,7 @@ def wait_for_db(host: str, port: int) -> bool:
 
 
 @pytest.fixture(scope="function")
-def db(in_docker_compose, docker_services):
+def db_mongodb(in_docker_compose, docker_services):
     docker_services.start("db")
     if in_docker_compose:
         port = 27017
