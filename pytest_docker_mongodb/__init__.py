@@ -17,11 +17,19 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="session")
 def in_docker_compose(request):
+    """
+    Gets command line argument `--in-docker-compose`
+    """
     return request.config.getoption("--in-docker-compose")
 
 
 @pytest.fixture(scope="session")
 def docker_compose_files(in_docker_compose, pytestconfig):
+    """
+    This fixture provides support for `cloudbuild`.
+    By passing the command line argument `--in-docker-compose=cloudbuild`,
+    uses `docker-compose.cloudbuild.yml`.
+    """
     dc_type = f".{in_docker_compose}" if in_docker_compose else ""
 
     dc_file = f"docker-compose{dc_type}.yml"
@@ -43,6 +51,16 @@ def wait_for_db(host: str, port: int) -> bool:
 
 @pytest.fixture(scope="function")
 def db_mongodb(in_docker_compose, docker_services):
+    """
+    Provided is the `db` fixture which gives you an `motor` test
+    database instance for mongodb::
+
+        @pytest.fixture
+        def db_with_schema(db_mongodb):
+            fill_database(db_mongodb)
+            return db
+
+    """
     docker_services.start("db")
     if in_docker_compose:
         port = 27017
